@@ -1,0 +1,22 @@
+{
+  "pacientes": [
+    {
+      "id": "c93d",
+      "nombre": "Julio Cesar",
+      "apellido": "Chiappa",
+      "estado": "Paciente en Espera"
+    },
+    {
+      "id": "89c7",
+      "nombre": "José",
+      "apellido": "Loza",
+      "estado": "Paciente en Espera"
+    },
+    {
+      "id": "e510",
+      "nombre": "Alfredo",
+      "apellido": "Perez",
+      "estado": "Paciente en Espera"
+    }
+  ]
+}
