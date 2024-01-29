@@ -50,6 +50,7 @@ const actualizarEstadoPaciente = async (id, paciente, estadoNuevo) => {
     return data;
 };
 
+
 //ELIMINAR PACIENTE METODO  DELETE
 
 const eliminarPacientes = async (id) => {

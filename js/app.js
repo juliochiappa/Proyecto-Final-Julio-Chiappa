@@ -75,8 +75,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const cambiarEstado = async (idPaciente, estadoActual, nuevoEstado, turnos) => {
         const paciente = turnos[estadoActual];
     
-        // Verificar si el paciente es un objeto y además está en estado "Paciente en Espera"
-        if (paciente && typeof paciente === 'object' && paciente.estado === 'Paciente en Espera') {
+        // Verificar si el paciente está en estado "Paciente en Espera"
+        if (paciente.estado === 'Paciente en Espera') {
     
             // Actualizar el estado del paciente en el servidor
             await tareasApi.actualizarEstadoPaciente(idPaciente, nuevoEstado);
