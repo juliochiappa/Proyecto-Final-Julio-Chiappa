@@ -24,7 +24,7 @@ const agregarPacientes = async (paciente) => {
         method: "POST",
         body: JSON.stringify(paciente),
         headers: {
-            "Content-type": "application/json; charset-UTF 8"
+            "Content-Type": "application/json; charset-UTF 8"
         },
     });
     const data = await resp.json();
@@ -34,15 +34,12 @@ const agregarPacientes = async (paciente) => {
 
 //ACTUALIZAR PACIENTE METODO  PUT
 
-const actualizarEstadoPaciente = async (id, paciente, estadoNuevo) => {
-    // Modificar el objeto paciente con el nuevo estado
-    paciente.estado = estadoNuevo;
-    
+const actualizarEstadoPaciente = async (id, estadoNuevo) => {
     const resp = await fetch(`http://localhost:3000/pacientes/${id}`, {
         method: "PUT",
-        body: JSON.stringify(paciente),
+        body: JSON.stringify({ estado: estadoNuevo }),  
         headers: {
-            "Content-type": "application/json; charset=UTF-8"
+            "Content-Type": "application/json; charset=UTF-8"  
         },
     });
     const data = await resp.json();
@@ -51,13 +48,14 @@ const actualizarEstadoPaciente = async (id, paciente, estadoNuevo) => {
 };
 
 
+
 //ELIMINAR PACIENTE METODO  DELETE
 
 const eliminarPacientes = async (id) => {
     const resp = await fetch(`http://localhost:3000/pacientes/${id}`, {
         method: "DELETE",
         headers: {
-            "Content-type": "application/json; charset-UTF 8"
+            "Content-Type": "application/json; charset-UTF 8"
         },
     });
     const data = await resp.json();
