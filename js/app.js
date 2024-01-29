@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const botonAtendido = document.createElement('button');
             botonAtendido.className = 'btn btn-info btn-sm mx-5 d-block m-2';
             botonAtendido.textContent = 'Paciente Atendido';
-            botonAtendido.onclick = () => cambiarEstado(paciente.id, estadoActual, 'Paciente Atendido');
+            botonAtendido.onclick = () => cambiarEstado(paciente.id, estadoActual, 'Paciente Atendido', turnos);
 
             const botonEliminar = document.createElement('button');
             botonEliminar.className = 'btn btn-danger btn-sm mx-5 d-block m-2';
@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 await tareasApi.agregarPacientes(paciente);
 
                 Swal.fire({
-                    title: "¡El paciente se encuentra registrado en Espera!",
+                    title: `¡Paciente ${paciente.nombre} ${paciente.apellido} se encuentra en espera para ser atendido/a!`,
                     icon: "success",
                 });
 
@@ -72,26 +72,35 @@ document.addEventListener('DOMContentLoaded', () => {
     };
    
     // Función para cambiar el estado del paciente del servidor utilizando la Api respectiva (PUT)
-    const cambiarEstado = async (idPaciente, estadoActual, nuevoEstado) => {
+    const cambiarEstado = async (idPaciente, estadoActual, nuevoEstado, turnos) => {
         const paciente = turnos[estadoActual];
-        paciente.estado = nuevoEstado;
-            
-        // Verificar si el paciente está en estado "Paciente Atendido"
-        if (paciente.estado === 'Paciente Atendido') {
-            
+    
+        // Verificar si el paciente es un objeto y además está en estado "Paciente en Espera"
+        if (paciente && typeof paciente === 'object' && paciente.estado === 'Paciente en Espera') {
+    
             // Actualizar el estado del paciente en el servidor
             await tareasApi.actualizarEstadoPaciente(idPaciente, nuevoEstado);
     
-            // Mostrar un mensaje de éxito con SweetAlert
+            // Cambiar el estadoEnEspera al estadoAtendido
+            paciente.estado = nuevoEstado;
+    
+            // Muestra un mensaje de éxito con SweetAlert
             Swal.fire({
-                title: `¡El paciente ${paciente.nombre} ${paciente.apellido} fue cambiado al estado de ${nuevoEstado}!`,
+                title: `¡El paciente: ${paciente.nombre} ${paciente.apellido} fue cambiado al estado de ${nuevoEstado}!`,
                 icon: "success",
             });
     
-            // Actualizar la lista de pacientes desde el servidor
+            // Actualiza la lista de pacientes desde el servidor
             mostrarPacientes();
-         } 
+        } else {
+            // Mostrar un mensaje indicando que el paciente no está en espera
+            Swal.fire({
+                title: `¡El paciente: ${paciente.nombre} ${paciente.apellido} no está en espera, ya fue atendido!`,
+                icon: "warning",
+            });
+        }
     };
+    
 
     // Función para eliminar un paciente del servidor utilizando la Api respectiva (DELETE)
     const eliminarPaciente = async (idPaciente) => {

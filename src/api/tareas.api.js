@@ -34,7 +34,7 @@ const agregarPacientes = async (paciente) => {
 
 //ACTUALIZAR PACIENTE METODO  PUT
 
-const actualizarEstadoPaciente = async (id, paciente, estadoNuevo,) => {
+const actualizarEstadoPaciente = async (id, paciente, estadoNuevo) => {
     // Modificar el objeto paciente con el nuevo estado
     paciente.estado = estadoNuevo;
     
