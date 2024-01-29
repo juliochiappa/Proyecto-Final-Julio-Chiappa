@@ -39,13 +39,14 @@ const actualizarEstadoPaciente = async (id, estadoNuevo) => {
         method: "PUT",
         body: JSON.stringify({ estado: estadoNuevo }),  
         headers: {
-            "Content-Type": "application/json; charset=UTF-8"  
+            "Content-Type": "application/json; charset=UTF-8"
         },
     });
     const data = await resp.json();
     console.log(data);
     return data;
 };
+
 
 
 

@@ -71,35 +71,34 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
    
-    // Función para cambiar el estado del paciente del servidor utilizando la Api respectiva (PUT)
+        // Función para cambiar el estado del paciente del servidor utilizando la Api respectiva (PUT)
     const cambiarEstado = async (idPaciente, estadoActual, nuevoEstado, turnos) => {
         const paciente = turnos[estadoActual];
-    
-        // Verificar si el paciente está en estado "Paciente en Espera"
-        if (paciente.estado === 'Paciente en Espera') {
-    
-            // Actualizar el estado del paciente en el servidor
-            await tareasApi.actualizarEstadoPaciente(idPaciente, nuevoEstado);
-    
-            // Cambiar el estadoEnEspera al estadoAtendido
-            paciente.estado = nuevoEstado;
-    
-            // Muestra un mensaje de éxito con SweetAlert
-            Swal.fire({
-                title: `¡El paciente: ${paciente.nombre} ${paciente.apellido} fue cambiado al estado de ${nuevoEstado}!`,
-                icon: "success",
-            });
-    
-            // Actualiza la lista de pacientes desde el servidor
-            mostrarPacientes();
-        } else {
-            // Mostrar un mensaje indicando que el paciente no está en espera
-            Swal.fire({
-                title: `¡El paciente: ${paciente.nombre} ${paciente.apellido} no está en espera, ya fue atendido!`,
-                icon: "warning",
-            });
-        }
+
+        // Verificar si el paciente está definido y tiene las propiedades necesarias
+        if (paciente && paciente.nombre && paciente.apellido) {
+            // Verificar si el paciente está en estado "Paciente en Espera"
+            if (paciente.estado === 'Paciente en Espera') {
+
+                // Actualizar el estado del paciente en el servidor
+                await tareasApi.actualizarEstadoPaciente(idPaciente, nuevoEstado);
+
+                // Realizar una nueva llamada para obtener la lista actualizada de pacientes
+                const nuevosTurnos = await tareasApi.obtenerPacientes();
+
+                // Muestra un mensaje de éxito con SweetAlert
+                Swal.fire({
+                    title: `¡El paciente: ${paciente.nombre} ${paciente.apellido} fue cambiado al estado de ${nuevoEstado}!`,
+                    icon: "success",
+                });
+
+                // Actualiza la lista de pacientes desde el servidor
+                actualizarTurnos(nuevosTurnos);
+            } 
+        } 
     };
+
+
     
 
     // Función para eliminar un paciente del servidor utilizando la Api respectiva (DELETE)

@@ -1,14 +1,3 @@
 {
-  "pacientes": [
-    {
-      "estado": "Paciente Atendido",
-      "id": "2b5a"
-    },
-    {
-      "id": "457a",
-      "nombre": "Martin",
-      "apellido": "Chiappa",
-      "estado": "Paciente en Espera"
-    }
-  ]
+  "pacientes": []
 }
